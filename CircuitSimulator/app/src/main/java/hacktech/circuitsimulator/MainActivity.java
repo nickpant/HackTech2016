@@ -14,6 +14,8 @@ import java.io.File;
 public class MainActivity extends Activity {
     Button button;
     ImageView imageView;
+    Button analyzeButton;
+
     static final int CAM_REQUEST = 1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,7 +32,15 @@ public class MainActivity extends Activity {
                 startActivityForResult(camera_intent, CAM_REQUEST);
             }
         });
+        analyzeButton = (Button)findViewById(R.id.analyze_button);
+        analyzeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, Main2Activity.class));
+            }
+        });
     }
+
     private File getFile(){
         File folder = new File("sdcard/Circuit Simulator");
         if(!folder.exists()){
@@ -39,6 +49,7 @@ public class MainActivity extends Activity {
         File image_file = new File(folder, "cam_image.jpg");
         return image_file;
     }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         String path = "sdcard/Circuit Simulator/cam_image.jpg";
