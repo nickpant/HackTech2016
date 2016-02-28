@@ -27,7 +27,7 @@ public class Main2Activity extends AppCompatActivity {
         setContentView(R.layout.activity_main2);
 
         DataFetcher fetch = new DataFetcher();
-        int[][] elementMatrix = fetch.loadData("");
+        int[][] elementMatrix = fetch.loadData();
         ArrayList<SuperNode> superNodes = new ArrayList<SuperNode>();
 
         int k = 0;

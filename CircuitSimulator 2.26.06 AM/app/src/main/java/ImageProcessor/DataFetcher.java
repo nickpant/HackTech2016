@@ -14,25 +14,29 @@ public class DataFetcher {
     }
 
 
-    public int[][] loadData(String argv) {
-/*
+    public int[][] loadData() {
+
         KernelLink ml = null;
         try {
-            ml = MathLinkFactory.createKernelLink(argv);
+            ml = MathLinkFactory.createKernelLink(new String[]{"-linkmode", "launch", "-linkname", "\"/Applications/Mathematica.app/Contents/MacOS/MathKernel\" -mathlink"});
         }
         catch (MathLinkException e) {
-           // System.out.println("Fatal error opening link: " + e.getMessage());
             return null;
         }
         try {
           // wolfram code goes here
+            ml.discardAnswer();
+            ml.evaluate("ImageCorners[\"sdcard/Circuit Simulator/cam_image.jpg\"]");
+            ml.waitForAnswer();
+
+            int[][] result = ml.getIntArray2();
+
         }
-        catch (MathLinkException e) {
-        }
+        catch (MathLinkException e) {}
         finally {
             ml.close();
         }
-*/
+
         // set always the left most node to be zero
 
         // calculate number of nodes
