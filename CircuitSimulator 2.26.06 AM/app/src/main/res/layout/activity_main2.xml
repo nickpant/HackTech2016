@@ -27,6 +27,14 @@
         android:textStyle="bold"
         android:textColor="#ff00ff" />
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/output_text2"
+        android:layout_gravity="center_horizontal"
+        android:textStyle="bold"
+        android:textColor="#ff00ff" />
+
     <ImageView
         android:layout_width="350dp"
         android:layout_height="300dp"

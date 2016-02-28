@@ -27,7 +27,7 @@ public class Main2Activity extends AppCompatActivity {
         setContentView(R.layout.activity_main2);
 
         DataFetcher fetch = new DataFetcher();
-        int[][] elementMatrix = fetch.loadData();
+        int[][] elementMatrix = fetch.loadData("");
         ArrayList<SuperNode> superNodes = new ArrayList<SuperNode>();
 
         int k = 0;
@@ -100,7 +100,7 @@ public class Main2Activity extends AppCompatActivity {
             }
         }
 
-        String[] equations = new String[superNodes.size() - 1];
+        String[] voltageEquations = new String[superNodes.size() - 1];
         // if the super nodes does not contain refA add it manually
         // and declare the string array
         if (!containsRefA)
@@ -112,7 +112,7 @@ public class Main2Activity extends AppCompatActivity {
             // only do calculations for super nodes
             // that are NOT the reference
             if (!node.isReference() && !node.isThevA()) {
-                equations[i] = "0 = ";
+                voltageEquations[i] = "0 = ";
                 // iterate through each resistor connected to node
                 // to determine what the other node connected to R is
                 for (Resistor R : node.getElements()) {
@@ -133,14 +133,51 @@ public class Main2Activity extends AppCompatActivity {
                     }
                     // if no superNode is associate with the other node, get the node info directly
                     // form the equation
-                    equations[i] += "+(" + node.getVoltage() + "-" + otherSuperNode.getVoltage() + ")/" + R.getResistance();
+                    voltageEquations[i] += "+(" + node.getVoltage() + "-" + otherSuperNode.getVoltage() + ")/" + R.getResistance();
                 }
                 i++;
             }
         }
 
+        // some wolfram stuff happens here
+        // make sure to setVoltage of the super nodes to the proper values!!!
+        int v_1 = 3; // CHANGE THIS!!!!!!!!!!
+
+        // find the super node right before reference A
+        int secondLastIndex = superNodes.size() - 2;
+        SuperNode secondLastNode = superNodes.get(secondLastIndex);
+        secondLastNode.setVoltage(3);  // CHANGE THIS!!!!!!!!!!
+        // perform conservation of current
+        String currentEquation = "I = ";
+        for (Resistor R : secondLastNode.getElements()) {
+            int otherNode = R.getOtherNodeConnected(secondLastNode.getChildren());
+            // do calculations only if the other node is not the reference node
+            if (otherNode != 0) {
+                ArrayList<Integer> temp = new ArrayList<Integer>();
+                temp.add(-1);
+                temp.add(-1);
+                SuperNode otherSuperNode = new SuperNode(temp, "-1");
+                // determine the superNode that's associated with the other node
+                for (SuperNode node : superNodes) {
+                    if (node.containsChild(new Integer(otherNode))) {
+                        otherSuperNode = node;
+                        break;
+                    }
+                }
+                int voltageDrop = (Integer) secondLastNode.getVoltage() - (Integer) otherSuperNode.getVoltage();
+                currentEquation += "+" + voltageDrop + "/" + R.getResistance() + " ";
+            }
+        }
+
+        // wolfram alpha stuff here
+        // calculate I from current equation
+        // calculate Req by doing V / I;
+
+
         TextView e = (TextView) findViewById(R.id.output_text);
-        e.setText(equations[0]);
+        TextView f = (TextView) findViewById(R.id.output_text2);
+        e.setText(voltageEquations[0]);
+        f.setText(currentEquation);
 
         File imgFile = new  File("/sdcard/Circuit Simulator/cam_image.jpg");
         if(imgFile.exists()){

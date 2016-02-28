@@ -1,6 +1,6 @@
 package ImageProcessor;
 
-import java.util.ArrayList;
+import com.wolfram.jlink.*;
 
 /**
  * Created by MasterPiyasirisilp on 2016-02-28.
@@ -13,8 +13,26 @@ public class DataFetcher {
 
     }
 
-    public int[][] loadData() {
 
+    public int[][] loadData(String argv) {
+/*
+        KernelLink ml = null;
+        try {
+            ml = MathLinkFactory.createKernelLink(argv);
+        }
+        catch (MathLinkException e) {
+           // System.out.println("Fatal error opening link: " + e.getMessage());
+            return null;
+        }
+        try {
+          // wolfram code goes here
+        }
+        catch (MathLinkException e) {
+        }
+        finally {
+            ml.close();
+        }
+*/
         // set always the left most node to be zero
 
         // calculate number of nodes
