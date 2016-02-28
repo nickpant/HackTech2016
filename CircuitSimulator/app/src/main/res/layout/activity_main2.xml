@@ -16,7 +16,7 @@
         android:layout_height="wrap_content"
         android:text="@string/instructions"
         android:textStyle="bold"
-        android:textColor="ff00ff" />
+        android:textColor="#ff00ff" />
 
     <ImageView
         android:layout_width="350dp"
@@ -28,9 +28,9 @@
     <Button
         android:layout_width="200dp"
         android:layout_height="wrap_content"
-        android:text="Analyze A New Circuit"
-        android:id="@+id/analyze_button"
+        android:text="Analyze New Circuit"
+        android:id="@+id/refresh_button"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="7dp" />
+        android:layout_marginTop="10dp" />
 
 </LinearLayout>
