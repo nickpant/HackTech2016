@@ -9,7 +9,18 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+
+import org.json.JSONObject;
+import org.json.JSONTokener;
+
+import java.io.*;
+
+import java.io.BufferedInputStream;
 import java.io.File;
+import java.io.InputStream;
+import java.lang.Object.*;
+import java.net.HttpURLConnection;
+import java.net.URL;
 
 public class MainActivity extends Activity {
     Button button;
@@ -61,4 +72,5 @@ public class MainActivity extends Activity {
         String path = "sdcard/Circuit Simulator/cam_image.jpg";
         imageView.setImageDrawable(Drawable.createFromPath(path));
     }
+
 }
