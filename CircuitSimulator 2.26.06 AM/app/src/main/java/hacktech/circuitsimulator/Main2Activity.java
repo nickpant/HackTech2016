@@ -9,6 +9,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -25,13 +26,11 @@ public class Main2Activity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
 
-
-        // counter variable for the super node name
-        int k = 0;
-
         DataFetcher fetch = new DataFetcher();
         int[][] elementMatrix = fetch.loadData();
         ArrayList<SuperNode> superNodes = new ArrayList<SuperNode>();
+
+        int k = 0;
 
         // populate the super nodes array list
         for (int i = elementMatrix.length - 1; i >= 0; i--) {
@@ -54,6 +53,7 @@ public class Main2Activity extends AppCompatActivity {
                             existingNode = true;
                         }
                     }
+
                     // if no super nodes with the child nodes (i or j) exist
                     // then create a new super node with child nodes (i, j)
                     if (!existingNode) {
@@ -62,8 +62,8 @@ public class Main2Activity extends AppCompatActivity {
                         childNodes.add(j);
                         superNodes.add(new SuperNode(childNodes, Integer.toString(k++)));
                     }
-
                 }
+
             }
         }
 
@@ -81,7 +81,6 @@ public class Main2Activity extends AppCompatActivity {
                     }
                 }
             }
-
         }
 
         // determine the largest super node, and set it to reference
@@ -93,13 +92,19 @@ public class Main2Activity extends AppCompatActivity {
         superNodes.get(largestNodeIndex).setReference();
 
         // set the voltage of superNodes containing node A to 5V
-        for (SuperNode node : superNodes)
-                if (node.containsChild(new Integer(0)))
-                    node.setThevA();
+        boolean containsRefA = false;
+        for (SuperNode node : superNodes) {
+            if (node.containsChild(new Integer(0))) {
+                node.setVoltage(5);
+                containsRefA = true;
+            }
+        }
 
-        // populate the equations array with the linear equations
-        // that describe the circuit
-        String[] equations = new String[superNodes.size() - 2];
+        String[] equations = new String[superNodes.size() - 1];
+        // if the super nodes does not contain refA add it manually
+        // and declare the string array
+        if (!containsRefA)
+            superNodes.add(new SuperNode(new ArrayList<Integer>(Arrays.asList(0)), Integer.toString(k), true));
 
         int i = 0;
 
@@ -126,14 +131,23 @@ public class Main2Activity extends AppCompatActivity {
                             break;
                         }
                     }
+                    // if no superNode is associate with the other node, get the node info directly
                     // form the equation
-                    equations[i++] += "(" + node.getVoltage() + "-" + otherSuperNode.getVoltage() + ")/" + R.getResistance();
+                    equations[i] += "+(" + node.getVoltage() + "-" + otherSuperNode.getVoltage() + ")/" + R.getResistance();
                 }
+                i++;
             }
         }
 
         TextView e = (TextView) findViewById(R.id.output_text);
         e.setText(equations[0]);
+
+        File imgFile = new  File("/sdcard/Circuit Simulator/cam_image.jpg");
+        if(imgFile.exists()){
+            Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
+            ImageView myImage = (ImageView) findViewById(R.id.image);
+            myImage.setImageBitmap(myBitmap);
+        }
 
 
 
@@ -145,17 +159,6 @@ public class Main2Activity extends AppCompatActivity {
             }
         });
     }
-
-
-        /*
-        File imgFile = new  File("/sdcard/Circuit Simulator/cam_image.jpg");
-
-        if(imgFile.exists()){
-            Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
-            ImageView myImage = (ImageView) findViewById(R.id.image);
-            myImage.setImageBitmap(myBitmap);
-        }
-        */
 }
 
 

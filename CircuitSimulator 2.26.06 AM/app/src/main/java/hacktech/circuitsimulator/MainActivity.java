@@ -48,12 +48,7 @@ public class MainActivity extends Activity {
         analyzeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (test == 1) {
                     startActivity(new Intent(MainActivity.this, Main2Activity.class));
-                }
-                else {
-                    startActivity(new Intent(MainActivity.this, Main3Activity.class));
-                }
             }
         });
     }

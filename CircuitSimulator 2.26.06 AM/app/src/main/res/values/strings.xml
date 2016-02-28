@@ -1,4 +1,4 @@
 <resources>
     <string name="app_name">Circuit Simulator</string>
-    <string name="instructions">Test</string>
+    <string name="instructions">Thevenin Resistance: </string>
 </resources>

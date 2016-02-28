@@ -8,7 +8,7 @@ import java.util.ArrayList;
 public class SuperNode {
 
     private ArrayList<Integer> childNodes;
-    private int voltage;
+    private int voltage = -999;
     private ArrayList<Resistor> elementsConnected;
     private String nodeName;
     private boolean reference, thevA;
@@ -19,6 +19,17 @@ public class SuperNode {
         this.nodeName = nodeName;
     }
 
+    public SuperNode(ArrayList<Integer> childNodes, String nodeName, boolean isThevA) {
+        this.childNodes = childNodes;
+        this.elementsConnected = new ArrayList<Resistor>();
+        this.nodeName = nodeName;
+        // if it's a reference node
+        if (isThevA){
+            this.thevA = true;
+            this.setVoltage(5);
+        }
+    }
+
     // set the voltage associated to this super node
     // only the end nodes will get a voltage associated
     public void setVoltage(int voltage) {
@@ -26,7 +37,7 @@ public class SuperNode {
     }
 
     public Object getVoltage() {
-        if (this.voltage != 0)
+        if (this.voltage != -999)
             return new Integer(this.voltage);
         else return new String("v_" + this.nodeName);
     }
@@ -68,11 +79,6 @@ public class SuperNode {
 
     public boolean isReference() {
         return reference;
-    }
-
-    public void setThevA() {
-        setVoltage(5);
-        thevA = true;
     }
 
     public boolean isThevA() {
