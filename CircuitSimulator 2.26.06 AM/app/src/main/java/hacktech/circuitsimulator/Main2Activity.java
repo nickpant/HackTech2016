@@ -19,6 +19,8 @@ import Components.SuperNode;
 import ImageProcessor.DataFetcher;
 import Components.Resistor;
 
+// We perform our nodal analysis in this class
+
 public class Main2Activity extends AppCompatActivity {
 
     @Override

@@ -22,6 +22,10 @@ import java.lang.Object.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+// This is the main class where the Android UI is run
+// We also collect our picture from the camera here
+
+
 public class MainActivity extends Activity {
     Button button;
     ImageView imageView;
