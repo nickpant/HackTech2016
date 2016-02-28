@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">CircuitSimulator</string>
+    <string name="instructions">Click on node to see values!</string>
 </resources>
