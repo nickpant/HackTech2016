@@ -15,6 +15,7 @@ public class MainActivity extends Activity {
     Button button;
     ImageView imageView;
     Button analyzeButton;
+    int test = 1;
 
     static final int CAM_REQUEST = 1;
     @Override
@@ -36,7 +37,12 @@ public class MainActivity extends Activity {
         analyzeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, Main2Activity.class));
+                if (test == 1) {
+                    startActivity(new Intent(MainActivity.this, Main2Activity.class));
+                }
+                else {
+                    startActivity(new Intent(MainActivity.this, Main3Activity.class));
+                }
             }
         });
     }
